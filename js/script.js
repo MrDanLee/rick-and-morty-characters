@@ -1,29 +1,30 @@
 /*
-  1. json personajes
-  2. HTML personajes
-  3. CSS personajes 
+  1. json personajes hecho
+  2. HTML personajes hecho
+  3. CSS personajes hecho
   4. JS salto entre páginas
   5. CSS páginas extra
 */
 
 
 document.addEventListener("DOMContentLoaded", () => {
-
+  fetchPersonajes();
 })
-const elementos = document.getElementById('elementos');
+
+const personajesLista = document.getElementById('character-list')
 
 function renderPaginaPersonajes (personajesData) {
   const personajesDisplay = personajesData.map(personaje => {
       const template = `
-        <div>
+        <li>
           <img src="${personaje.image}" alt="${personaje.name}">
-          <p>${personaje.image}</p>
-          <p>${personaje.species}</p>
-        </div>
+          <h3>Name: ${personaje.name}</h3>
+          <h3>Species: ${personaje.species}</h3>
+        </li>
       `;
       return template;
     }).join("")
-    elementos.innerHTML = personajesDisplay;
+    personajesLista.innerHTML = personajesDisplay;
 }
 
 function fetchPersonajes () {
@@ -43,7 +44,6 @@ function fetchPersonajes () {
 }
 
 
-fetchPersonajes();
 
 
 
