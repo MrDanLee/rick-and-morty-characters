@@ -6,7 +6,26 @@
   5. CSS páginas extra
 */
 
+const charactersList = document.getElementById('character-list');
 
+fetch("https://rickandmortyapi.com/api/character/?page=1")
+.then(response => response.json())
+.then(data => {
+  const characters = data.results.map((character => {
+    const template = `
+      <li>
+        <img src="${character.image}" alt="${character.name}">
+        <h2>${character.name}</h2>
+        <p>${character.species}</p>
+      </li>
+    `
+    return template;  
+  })).join("")
+  charactersList.innerHTML = characters
+  console.log('funciona');
+})
+
+/*
 document.addEventListener("DOMContentLoaded", () => {
   fetchPersonajes();
 })
@@ -18,8 +37,8 @@ function renderPaginaPersonajes (personajesData) {
       const template = `
         <li>
           <img src="${personaje.image}" alt="${personaje.name}">
-          <h3>Name: ${personaje.name}</h3>
-          <h3>Species: ${personaje.species}</h3>
+          <h3><em>Name:</em> ${personaje.name}</h3>
+          <h3><em>Species:</em> ${personaje.species}</h3>
         </li>
       `;
       return template;
@@ -35,14 +54,14 @@ function fetchPersonajes () {
     }
     return response.json();
   })
-  .then((personajes) => {
-    renderPaginaPersonajes(personajes.results);
+  .then((data) => {
+    renderPaginaPersonajes(data.results);
   })
   .catch((error) => {
     console.log('Error: No se pueden obtener los personajes.')
   })
 }
-
+*/
 
 
 
