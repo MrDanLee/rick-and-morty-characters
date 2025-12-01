@@ -7,23 +7,61 @@
 */
 
 const charactersList = document.getElementById('character-list');
+const prevPage = document.getElementById('prev-page');
+const nextPage = document.getElementById('next-page');
+let currentPage = 1;
+let finalPage = 40;
 
-fetch("https://rickandmortyapi.com/api/character/?page=1")
-.then(response => response.json())
-.then(data => {
-  const characters = data.results.map((character => {
-    const template = `
-      <li>
-        <img src="${character.image}" alt="${character.name}">
-        <h2>${character.name}</h2>
-        <p>${character.species}</p>
-      </li>
-    `
-    return template;  
-  })).join("")
-  charactersList.innerHTML = characters
-  console.log('funciona');
+function getCharacters () {
+  fetch(`https://rickandmortyapi.com/api/character/?page=${currentPage}`)
+  .then(response =>  {
+    if (!response.ok) {
+      throw new Error(`Error en la petición: ${response.status}`)
+    }
+    return response.json(); 
+  })
+  .then(data => {
+    const characters = data.results.map((character => {
+      finalPage = data.info.pages
+      const template = `
+        <li>
+          <img src="${character.image}" alt="${character.name}">
+          <h2><strong>Name: </strong>${character.name}</h2>
+          <p><strong>Species: </strong>${character.species}</p>
+        </li>
+      `
+      return template;  
+    })).join("")
+    charactersList.innerHTML = characters
+    removeButton()
+    console.log('estamos en la pagina', currentPage)
+  })
+  .catch(error => {
+    charactersList.innerHTML = `<h3 class="error">${error}</h3>`;
+  })
+}
+
+getCharacters();
+
+prevPage.addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--
+    getCharacters()
+  }   
 })
+
+nextPage.addEventListener('click', () => {
+  if (currentPage < 42) {
+    currentPage++
+    getCharacters()
+  }
+})
+
+function removeButton () {
+  currentPage === 1 ? prevPage.classList.add("disabled") : prevPage.classList.remove("disabled")
+  currentPage === finalPage ? nextPage.classList.add("disabled") : nextPage.classList.remove("disabled")
+} 
+ 
 
 /*
 document.addEventListener("DOMContentLoaded", () => {

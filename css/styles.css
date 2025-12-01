@@ -73,15 +73,35 @@ table {
 }
 
 ul {  
-  padding-top: 100px;
+  padding-top: 120px;
   list-style: none;
   display: flex;
   gap: 20px;
-  width: 100%;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 li {
+  border: 1px solid rgb(188, 186, 186);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+li strong {
+  font-weight: bold;
+}
+
+.disabled {
+  visibility: hidden;
+}
+
+.error {
+  color: red;
+  font-size: 50px;
+}
+
+
+/* li {
   width: 200px;
   border-width: 1px;
   border-style: solid;
@@ -91,4 +111,4 @@ li {
 
 li img {
   width: 200px;
-}
+} */
